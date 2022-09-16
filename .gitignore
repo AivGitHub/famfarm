@@ -1,0 +1,14 @@
+# Main
+__pycache__/
+dist/
+kureta.egg-info/
+*.log
+
+# Project
+.idea/
+.env
+.venv/
+db.sqlite3
+
+# External
+utils/static/base/bootstrap/

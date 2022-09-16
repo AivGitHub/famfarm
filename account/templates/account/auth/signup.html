@@ -1,0 +1,27 @@
+{% extends 'account/base_site.html' %}
+
+{% load i18n %}
+
+{% block content %}
+  <div class="">
+    <h3>{% translate "Sign Up" %}</h3>
+    <p class="text-center">
+	  {% translate "If you already have an account," %}
+      <a href="{% url 'account:signin' %}">
+        {% translate "Sign In" %}
+	  </a>
+	  {% translate "instead." %}
+	</p>
+    <form method="POST">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="mb-3">
+          <!-- <label class="form-label" for="{{ field.auto_id }}"> {{ field.label }}:</label> -->
+          {{ field }}
+          {{ field.errors }}
+        </div>
+      {% endfor %}
+      <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+  </div>
+{% endblock %}
