@@ -35,7 +35,9 @@
   <div class="breadcrumbs">
     <a href="{% url 'account:signin' %}">{% translate 'Home' %}</a>
     {% if title %} &rsaquo; {{ title }}{% endif %}
-    <a href="{% url 'blog:feed' %}">{% translate "Blog" %}</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'blog:feed' %}">{% translate "Blog" %}</a>
+    {% endif %}
   </div>
 {% endblock %}
 
