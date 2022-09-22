@@ -8,10 +8,16 @@ Project for family photos and memories.
 
 1. `python -m venv .venv`
 2. `source .venv/bin/activate`
-3. `pip install -r requirements.txt`
-4. Download bootstrap5 CSS and JS inside `utils/static/base/bootstrap/`:\
+3. Create `.env` file with:\
+```
+FF_SECRET_KEY='SOME_SECRET_VALUE'
+FF_DEBUG='True'
+FF_ALLOWED_HOSTS='localhost'
+```
+4. `pip install -r requirements.txt`
+5. Download bootstrap5 CSS and JS inside `utils/static/base/bootstrap/`:\
 `wget https://github.com/twbs/bootstrap/releases/download/v5.2.1/bootstrap-5.2.1-dist.zip && 7z x bootstrap-5.2.1-dist.zip && mv bootstrap-5.2.1-dist/* utils/static/base/bootstrap/ && rm -r bootstrap-5.2.1-dist`
-5. Generate nginx certificates `bash bin/generate_certificates.sh`
+6. Generate nginx certificates `bash bin/generate_certificates.sh`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
