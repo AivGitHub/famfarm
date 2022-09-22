@@ -1,0 +1,5 @@
+keepalive_timeout   70;
+
+location /favicon.ico {
+    alias /www/favicon.ico;
+}

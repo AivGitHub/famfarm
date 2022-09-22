@@ -13,3 +13,7 @@ db.sqlite3
 
 # External
 utils/static/base/bootstrap/
+
+# Certificates
+internal/nginx/settings/certificates/server.crt
+internal/nginx/settings/certificates/server.key

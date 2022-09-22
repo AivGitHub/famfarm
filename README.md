@@ -9,7 +9,22 @@ Project for family photos and memories.
 1. `python -m venv .venv`
 2. `source .venv/bin/activate`
 3. `pip install -r requirements.txt`
-4. Download bootstrap5 CSS and JS inside `utils/static/base/bootstrap/`
+4. Download bootstrap5 CSS and JS inside `utils/static/base/bootstrap/`:\
+`wget https://github.com/twbs/bootstrap/releases/download/v5.2.1/bootstrap-5.2.1-dist.zip && 7z x bootstrap-5.2.1-dist.zip && mv bootstrap-5.2.1-dist/* utils/static/base/bootstrap/ && rm -r bootstrap-5.2.1-dist`
+5. Generate nginx certificates `bash bin/generate_certificates.sh`
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Usage
+
+1. To run in development mod
+(caution: without [mules](https://uwsgi-docs.readthedocs.io/en/latest/Mules.html)) run `./manage.py runserver`
+2. To run in production with
+[mules](https://uwsgi-docs.readthedocs.io/en/latest/Mules.html) run
+[`bash`](https://www.gnu.org/software/bash/) [`bin/entrypoint.sh`](bin/entrypoint.sh) (static files won't be resolved)
+3. To run in
+[docker](https://docs.docker.com/engine/reference/commandline/compose_up/) container run `docker-compose up`.\
+Runs Django application, Nginx in Docker
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

@@ -1,0 +1,23 @@
+version: "3.3"
+
+services:
+  nginx:
+    container_name: nginx
+    build: internal/nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - famfarm:/www
+
+  famfarm:
+    container_name: famfarm
+    build: .
+    command: bash bin/entrypoint.sh
+    volumes:
+      - famfarm:/www
+    depends_on:
+      - nginx
+
+volumes:
+  famfarm:
