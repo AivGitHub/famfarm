@@ -4,6 +4,9 @@
 
 {% block content %}
   <div class="">
+    {% if not posts %}
+      {% translate "No posts yet." %}
+    {% endif %}
     {% for post in posts %}
       {% include "blog/includes/post.html" %}
     {% endfor %}
