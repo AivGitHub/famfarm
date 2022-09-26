@@ -105,6 +105,29 @@ class User(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
 
+class Album(models.Model):
+    name = models.CharField(
+        _('Album name'),
+        max_length=64,
+        null=False,
+        blank=False
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='account_albums'
+    )
+    description = models.TextField(
+        _('Description'),
+        null=True,
+        blank=True
+    )
+    date_created = models.DateTimeField(
+        _('Created date'),
+        default=timezone.now
+    )
+
+
 class Photo(models.Model):
     path = models.ImageField(
         _('Path'),
@@ -113,15 +136,22 @@ class Photo(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='photos'
     )
     coordinates = models.TextField(
-        _('Coordinates')
+        _('Coordinates'),
+        null=True,
+        blank=True
     )
     description = models.TextField(
-        _('Description')
+        _('Description'),
+        null=True,
+        blank=True
     )
-    created = models.DateTimeField(
-        _('Created'),
+    date_created = models.DateTimeField(
+        _('Created date'),
         default=timezone.now
+    )
+    album = models.ForeignKey(
+        Album,
+        on_delete=models.CASCADE,
     )
