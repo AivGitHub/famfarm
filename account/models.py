@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from account.managers import UserManager
-from account.utils import user_photo_path
+from account.utils import avatar_path, photo_path
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -61,7 +61,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=timezone.now
     )
     avatar = models.ImageField(
-        upload_to=user_photo_path,
+        upload_to=avatar_path,
         null=True,
         blank=True
     )
@@ -103,3 +103,25 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def email_user(self, subject, message, from_email=None, **kwargs) -> None:
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+
+class Photo(models.Model):
+    path = models.ImageField(
+        _('Path'),
+        upload_to=photo_path
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='photos'
+    )
+    coordinates = models.TextField(
+        _('Coordinates')
+    )
+    description = models.TextField(
+        _('Description')
+    )
+    created = models.DateTimeField(
+        _('Created'),
+        default=timezone.now
+    )
