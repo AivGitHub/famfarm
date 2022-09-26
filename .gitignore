@@ -10,6 +10,7 @@ kureta.egg-info/
 .venv/
 db.sqlite3
 /static/
+/media/
 
 # External
 utils/static/base/bootstrap/
