@@ -1,10 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext as _
 from django.views.generic import View
-from account.models import User
+from account.models import Album, User
 
 from account.forms import (
     UserSignInForm,
@@ -89,3 +90,26 @@ class Profile(LoginRequiredMixin, View):
                 return redirect(self.redirect_url)
 
         return render(request=request, template_name=self.template_name, context={'user': user})
+
+
+class Albums(LoginRequiredMixin, View):
+    template_name = 'account/photos/albums.html'
+    login_url = '/account/'
+    redirect_url = 'account:albums'
+
+    def get(self, request, *args, **kwargs):
+        author = request.user
+
+        if kwargs and kwargs.get('user_id'):
+            try:
+                author = User.objects.get(id=kwargs.get('user_id'))
+            except User.DoesNotExist:
+                return redirect(self.redirect_url)
+
+        albums = Album.objects.filter(author_id=author.pk)
+
+        paginator = Paginator(albums, 10)
+        page = request.GET.get('page')
+        paged_albums = paginator.get_page(page)
+
+        return render(request=request, template_name=self.template_name, context={'albums': paged_albums})

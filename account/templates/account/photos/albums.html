@@ -1,0 +1,35 @@
+{% extends 'base/base_site.html' %}
+
+{% load i18n %}
+
+{% block content %}
+  <div class="album bg-light">
+    <div class="container">
+  <div class="row">
+    {% if not albums %}
+      {% translate "No albums yet." %}
+    {% endif %}
+    {% for album in albums %}
+      {% include "account/photos/includes/album.html" %}
+    {% endfor %}
+    <div class="pagination">
+      <span class="step-links">
+        {% if albums.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ albums.previous_page_number }}">previous</a>
+        {% endif %}
+        {% if albums.number > 1 %}
+          <span class="current">
+            {% translate "Page" %} {{ albums.number }} {% translate "of" %} {{ albums.paginator.num_pages }}.
+          </span>
+        {% endif %}
+        {% if albums.has_next %}
+          <a href="?page={{ albums.next_page_number }}">next</a>
+          <a href="?page={{ albums.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  </div>
+    </div>
+  </div>
+{% endblock %}
