@@ -3,4 +3,4 @@ def avatar_path(instance, filename: str) -> str:
 
 
 def photo_path(instance, filename: str) -> str:
-    return f'data/uploads/user_{instance.pk}/{filename}'
+    return f'data/uploads/album_{instance.pk}/{filename}'
