@@ -5,12 +5,13 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext as _
 from django.views.generic import View
-from account.models import Album, User
 
+from account.models import Album, User
 from account.forms import (
     UserSignInForm,
     UserSignUpForm,
 )
+from blog.models import Post
 
 
 class SignIn(View):
@@ -89,7 +90,16 @@ class Profile(LoginRequiredMixin, View):
             except User.DoesNotExist:
                 return redirect(self.redirect_url)
 
-        return render(request=request, template_name=self.template_name, context={'user': user})
+        latest_blog_posts = Post.objects.all()[:5]
+
+        return render(
+            request=request,
+            template_name=self.template_name,
+            context={
+                'current_user': user,
+                'latest_blog_posts': latest_blog_posts
+            }
+        )
 
 
 class Albums(LoginRequiredMixin, View):

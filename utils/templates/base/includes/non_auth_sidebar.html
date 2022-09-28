@@ -1,0 +1,22 @@
+{% load i18n %}
+
+{% with request.resolver_match.url_name as url_name %}
+  <ul class="sidebar-nav" id="sidebar-nav">
+    {% block sign_in %}
+      <li class="nav-item">
+        <a class="nav-link {% if url_name != 'signin' %}collapsed{% endif %}" href="{% url 'account:signin' %}">
+          <i class="bi bi-arrow-right-square"></i>
+          <span>{% translate "Sign In!" %}</span>
+        </a>
+      </li>
+    {% endblock %}
+    {% block sign_up %}
+      <li class="nav-item">
+        <a class="nav-link {% if url_name != 'signup' %}collapsed{% endif %}" href="{% url 'account:signup' %}">
+          <i class="bi bi-file-text"></i>
+          <span>{% translate "Sign Up!" %}</span>
+        </a>
+      </li>
+    {% endblock %}
+  </ul>
+{% endwith %}

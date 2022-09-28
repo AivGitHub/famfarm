@@ -2,13 +2,66 @@
 
 {% load i18n %}
 
-{% block content %}
-  <div class="">
-    <h1>Profile</h1>
-    Username: {{ user.username }}
-    <br/>
-    First Name: {{ user.first_name }}
-    <br/>
-    Last Name: {{ user.last_name }}
+{% block section %}
+  <div class="row">
+    <div class="col-lg-7">
+      <div class="row">
+        <div class="col-xxl-4 col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{% translate "Photo" %}</h5>
+              <hr/>
+              <div class="d-flex align-items-center">
+                {% translate "Photo" %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-8 col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">
+                {% if current_user.first_name or current_user.last_name %}
+                  {{ current_user.first_name }} {{ current_user.last_name }}
+                {% else %}
+                  {{ current_user.username }}
+                {% endif %}
+              </h5>
+              <hr/>
+              <div class="d-flex align-items-center">
+                {% translate "Description" %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card overflow-auto">
+            <div class="card-body">
+              <h5 class="card-title">{% translate "Main page" %}</h5>
+              <hr/>
+              {% translate "Main page" %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <a href="{% url 'blog:feed' %}">{% translate "Blog posts" %}</a> <span>| {% translate "Latest" %}</span>
+          </h5>
+          <hr/>
+          <div class="latest-blog-posts">
+            {% if not latest_blog_posts %}
+              {% translate "No latest posts!" %}
+            {% endif %}
+            {% for post in latest_blog_posts %}
+              {% include "blog/includes/post.html" %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}

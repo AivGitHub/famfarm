@@ -3,7 +3,7 @@
     <div class="card-body">
       <h2><a href="/blog/post/{{ post.pk }}/">{{ post.title }}</a></h2>
       <p class="text-muted">
-        <a href="/account/profile/{{ post.author.pk }}/">
+        <a href="{% url 'account:profile' %}{{ post.author.pk }}/">
           {{ post.author.first_name }} {{ post.author.last_name }}
         </a> | {{ post.created_on }}
       </p>

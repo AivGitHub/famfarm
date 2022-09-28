@@ -1,0 +1,120 @@
+{% load i18n static %}
+
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE|default:'en-us' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    {% block blockbots %}
+      <meta name="robots" content="NONE,NOARCHIVE">
+    {% endblock %}
+    <title>
+      {% block page_title %}
+        {% if page_title %}
+          {{ page_title }}
+        {% else %}
+          {% translate "FamFarm" %}
+        {% endif %}
+      {% endblock %}
+    </title>
+    {% block scripts %}
+      <script src="{% static 'base/bootstrap/js/bootstrap.bundle.min.js' %}" defer></script>
+      <script src="{% static 'base/js/base.js' %}" defer></script>
+    {% endblock %}
+    {% block styles %}
+      <link href="{% static 'base/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'base/bootstrap/font/bootstrap-icons.css' %}" rel="stylesheet">
+      <link href="{% static 'base/css/base.css' %}" rel="stylesheet">
+    {% endblock %}
+    {% block extrastyle %}{% endblock %}
+    {% block extrahead %}{% endblock %}
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <header id="header" class="header fixed-top d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="{% url 'account:signin' %}"
+           class="logo d-flex align-items-center"
+        >
+          <span class="d-none d-lg-block">
+            {% translate "FamFarm" %}
+          </span>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+      </div>
+      {% if user.is_authenticated %}
+        <div class="search-bar">
+          <form class="search-form d-flex align-items-center" method="POST" action="#">
+            <input
+              type="text"
+              name="query"
+              placeholder="{% translate 'Search' %}"
+              title="{% translate 'Enter search keyword' %}"
+            >
+            <button type="submit" title="{% translate 'Search' %}"><i class="bi bi-search"></i></button>
+          </form>
+        </div>
+        <nav class="header-nav ms-auto">
+          <ul class="d-flex align-items-center">
+            <li class="nav-item d-block d-lg-none">
+              <a class="nav-link nav-icon search-bar-toggle" href="#">
+                <i class="bi bi-search"></i>
+              </a>
+            </li>
+            <li class="nav-item dropdown pe-3">
+              <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                <span class="d-none d-md-block dropdown-toggle ps-2">{{ user.username }}</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                <li class="dropdown-header">
+                  <h6>
+                    {% if user.first_name or user.last_name %}
+                      {{ user.first_name }} {{ user.last_name }}
+                    {% else %}
+                      {{ user.username }}
+                    {% endif %}
+                  </h6>
+                  {% if user.email %}
+                    <span>{{ user.email }}</span>
+                  {% endif %}
+                </li>
+                <li>
+                  <div class="dropdown-item d-flex align-items-center">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>
+                      <!-- TODO: Remove form -->
+                      <form id="logout-form" method="post" action="{% url 'account:logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">{% translate 'Log out' %}</button>
+                      </form>
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      {% endif %}
+    </header>
+    <aside id="sidebar" class="sidebar">
+      {% block sidebar %}
+      {% endblock %}
+    </aside>
+    <main id="main-content" class="main">
+      <section class="section">
+        {% block section %}
+        {% endblock %}
+      </section>
+    </main>
+    {% block footer %}
+      <footer id="footer" class="footer mt-auto">
+        <div class="copyright">
+          &copy; Copyright
+          <strong><span>{% translate "FamFarm" %}</span></strong>. {% translate "All Rights Reserved" %}
+        </div>
+      </footer>
+    {% endblock %}
+  </body>
+</html>

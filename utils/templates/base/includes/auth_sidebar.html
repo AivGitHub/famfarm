@@ -1,0 +1,18 @@
+{% load i18n %}
+
+{% with request.resolver_match.namespaces.0 as namespace %}
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item">
+      <a class="nav-link {% if namespace != 'account' %}collapsed{% endif %}" href="{% url 'account:signin' %}">
+        <i class="bi bi-person"></i>
+        <span>{% translate "Profile" %}</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if namespace != 'blog' %}collapsed{% endif %}" href="{% url 'blog:feed' %}">
+        <i class="bi bi-book"></i>
+        <span>{% translate "Blog" %}</span>
+      </a>
+    </li>
+  </ul>
+{% endwith %}

@@ -16,8 +16,10 @@ FF_ALLOWED_HOSTS='localhost'
 ```
 4. `pip install -r requirements.txt`
 5. Download bootstrap5 CSS and JS inside `utils/static/base/bootstrap/`:\
-`wget https://github.com/twbs/bootstrap/releases/download/v5.2.1/bootstrap-5.2.1-dist.zip && 7z x bootstrap-5.2.1-dist.zip && mv bootstrap-5.2.1-dist/* utils/static/base/bootstrap/ && rm -r bootstrap-5.2.1-dist`
-6. Generate nginx certificates `bash bin/generate_certificates.sh`
+`wget https://github.com/twbs/bootstrap/releases/download/v5.2.1/bootstrap-5.2.1-dist.zip && 7z x bootstrap-5.2.1-dist.zip && mkdir -p utils/static/base/bootstrap/ && mv bootstrap-5.2.1-dist/* utils/static/base/bootstrap/ && rm -r bootstrap-5.2.1-dist/`
+6. Download bootstrap5 icons inside `utils/static/base/bootstrap/font`:\
+`wget https://github.com/twbs/icons/archive/refs/tags/v1.9.1.zip && 7z x v1.9.1.zip && mv icons-1.9.1/font utils/static/base/bootstrap/ && rm utils/static/base/bootstrap/font/*.{json,scss,html} && rm -r v1.9.1.zip icons-1.9.1/`
+7. Generate nginx certificates `bash bin/generate_certificates.sh`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
