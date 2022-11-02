@@ -1,6 +1,6 @@
 {% extends 'base/base_site.html' %}
 
-{% load i18n %}
+{% load i18n static photos %}
 
 {% block section %}
   <div class="row">
@@ -12,7 +12,11 @@
               <h5 class="card-title">{% translate "Photo" %}</h5>
               <hr/>
               <div class="d-flex align-items-center">
-                {% translate "Photo" %}
+                {% if current_user.avatar %}
+                  <img src="{% get_thumbnail current_user.avatar %}"/>
+                {% else %}
+                  <img src="{% static 'account/default/avatar_thumbnail.jpg' %}"/>
+                {% endif %}
               </div>
             </div>
           </div>

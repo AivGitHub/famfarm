@@ -1,3 +1,6 @@
+import pathlib
+
+from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
@@ -6,6 +9,7 @@ from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from PIL import Image
 
 from account.managers import UserManager
 from account.utils import get_avatar_path, get_photo_path
@@ -71,6 +75,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
+    AVATAR_WIDTH = 200
+    AVATAR_HEIGHT = 400
+    THUMBNAIL_PREFIX = 'thumbnail'
 
     class Meta:
         verbose_name = _('User')
@@ -81,6 +88,20 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+
+        if self.avatar:
+            avatar_path = pathlib.Path(self.avatar.path)
+            avatar_thumbnail_path = avatar_path.parent.joinpath(
+                '%s_%s%s' % (
+                    avatar_path.stem,
+                    self.THUMBNAIL_PREFIX,
+                    avatar_path.suffix
+                )
+            )
+            avatar_thumbnail = Image.open(self.avatar)
+
+            avatar_thumbnail.thumbnail((self.AVATAR_WIDTH, self.AVATAR_HEIGHT))
+            avatar_thumbnail.save(avatar_thumbnail_path)
 
     def clean(self) -> None:
         super().clean()
