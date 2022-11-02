@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from account.managers import UserManager
-from account.utils import avatar_path, photo_path
+from account.utils import get_avatar_path, get_photo_path
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -61,7 +61,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=timezone.now
     )
     avatar = models.ImageField(
-        upload_to=avatar_path,
+        upload_to=get_avatar_path,
         null=True,
         blank=True
     )
@@ -131,7 +131,7 @@ class Album(models.Model):
 class Photo(models.Model):
     path = models.ImageField(
         _('Path'),
-        upload_to=photo_path
+        upload_to=get_photo_path
     )
     author = models.ForeignKey(
         User,
