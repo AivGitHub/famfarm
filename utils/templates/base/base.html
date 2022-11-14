@@ -81,14 +81,11 @@
                   {% endif %}
                 </li>
                 <li>
-                  <div class="dropdown-item d-flex align-items-center">
+                  <div class="dropdown-item d-flex align-items-center" id="logout-form" role="button">
                     <i class="bi bi-box-arrow-right"></i>
-                    <span>
-                      <!-- TODO: Remove form -->
-                      <form id="logout-form" method="post" action="{% url 'account:logout' %}">
-                        {% csrf_token %}
-                        <button type="submit">{% translate 'Log out' %}</button>
-                      </form>
+                    <span data-method="post" data-action="{% url 'account:logout' %}">
+                      {% csrf_token %}
+                      <a>{% translate 'Log out' %}</a>
                     </span>
                   </div>
                 </li>

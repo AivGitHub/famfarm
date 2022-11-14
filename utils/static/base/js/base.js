@@ -27,6 +27,25 @@ class Utils {
 (function() {
   'use strict';
 
+  let logoutForm = document.getElementById('logout-form');
+
+  if (logoutForm !== null) {
+    logoutForm.addEventListener('click', function(elem) {
+      elem.preventDefault();
+
+      let spanForm = this.getElementsByTagName('span')[0];
+      let token = this.getElementsByTagName('input')[0].value;
+
+      fetch(spanForm.dataset.action, {
+          method: spanForm.dataset.method,
+          headers: {
+              'X-CSRFToken': token
+          }
+      })
+      .then(location.reload());
+    }, false);
+  }
+
   if (Utils.easySelect('.toggle-sidebar-btn')) {
     Utils.easyOn('click', '.toggle-sidebar-btn', function(e) {
       Utils.easySelect('body').classList.toggle('toggle-sidebar')
