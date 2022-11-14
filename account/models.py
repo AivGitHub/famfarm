@@ -98,7 +98,11 @@ class User(AbstractBaseUser, PermissionsMixin):
                     avatar_path.suffix
                 )
             )
-            avatar_thumbnail = Image.open(self.avatar)
+            try:
+                avatar_thumbnail = Image.open(self.avatar)
+            except FileNotFoundError:
+                # avatar can be defined in DB, but not in media
+                return
 
             avatar_thumbnail.thumbnail((self.AVATAR_WIDTH, self.AVATAR_HEIGHT))
             avatar_thumbnail.save(avatar_thumbnail_path)
